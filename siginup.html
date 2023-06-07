@@ -85,34 +85,40 @@
 <body>
   <div class="login-container">
     <h2>Sinais Store</h2>
-    <h3>Faça Login em sua conta </h3>
+    <h3>Criar conta</h3>
     <span id="alert"></span>
-    <input type="email" placeholder="E-mail" required /><br />
-    <input type="password" placeholder="Senha" required /><br />
-    <a href="siginup.html">Não tem conta? <span>Criar conta</span></a>
+    <input type="text" placeholder="Usuário" /><br />
+    <input type="tel" pattern="[0-9]{9}" placeholder="Número de celular" required title="Número de celular" /><br />
+    <input type="email" placeholder="E-mail" /><br />
+    <input type="password" placeholder="Senha" /><br />
+    <a href="index.html">Tem conta? <span>Iniciar sessão</span></a>
     <br>
     <br>
-    <button onclick="login()">Entrar</button>
-    <br />
+    <button onclick="login()">Criar conta</button>
   </div>
 
   <script>
     function login() {
       const login = new FormData();
-      login.append("password", document.querySelector("input[type='password']").value);
+      login.append("name", document.querySelector("input[type='text']").value);
       login.append("email", document.querySelector("input[type='email']").value);
-      sendRequest(login, 'home.html');
+      login.append("phone", document.querySelector("input[type='tel']").value);
+      login.append("password", document.querySelector("input[type='password']").value);
+
+      sendRequest(login,'home.html');
+
     }
 
     async function sendRequest(formData, redirectTo = '') {
       try {
-        const response = await fetch("http://localhost/kitara/public/api/user/siginin", {
+        const response = await fetch("http://localhost/kitara/public/api/user/siginup", {
           method: "POST",
           body: formData,
         });
         const result = await response.json();
-        if (!result.status)
+        if (!result.status){
           document.querySelector("#alert").innerText = result.message;
+          console.log(result)}
         else {
           window.localStorage.setItem('user', JSON.stringify(result.data))
           if (redirectTo)
