@@ -111,7 +111,7 @@
 
     async function sendRequest(formData, redirectTo = '') {
       try {
-        const response = await fetch("https://kitara.space/kitara/public/api/user/siginup", {
+        const response = await fetch("https://kitara.space/api/user/siginup", {
           method: "POST",
           body: formData,
         });
