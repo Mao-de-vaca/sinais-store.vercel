@@ -1,44 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Pagamento</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sinais Store</title>
     <style>
       body {
-        background-color: #681114c6;
-        color: #e054cde3;
-        text-align: center;
+        background-color: hsl(352, 91%, 8%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #180505, 10, 10;
+        font-family: Arial, sans-serif;
       }
 
       h1 {
         font-size: 24px;
+        margin-bottom: 20px;
       }
 
-      p {
-        font-size: 18px;
-      }
-
-      .button {
+      button {
         padding: 10px 20px;
         border-radius: 25px;
         border: none;
-        background-color: red;
+        background-color: hsl(202, 84%, 49%);
         color: white;
         cursor: pointer;
         font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      .hora-container {
+        display: inline-block;
+        margin: 0 10px;
+        width: 100px;
+        height: 100px;
+        background-color: hsl(281, 81%, 51%);
+        color: white;
+        font-size: 18px;
+        border-radius: 50%;
+        text-align: center;
+      }
+
+      .hora-roxo {
+        background-color: hsla(271, 57%, 50%, 0.915);
+      }
+
+      .hora-rosa {
+        background-color: #e708b6e6;
+      }
+
+      .proximos {
+        font-size: 12px;
+        margin-bottom: 5px;
       }
     </style>
-  </head>
-  <body>
-    <h1>Sinais Store 100%</h1>
-    <p>clique no botao</p>
-    <button class="button" onclick="redirecionarParaWhatsApp()">Turbinar</button>
-
     <script>
-      function redirecionarParaWhatsApp() {
-        // Redirecionar para o WhatsApp
-        window.location.href = 'https://api.whatsapp.com/send?phone=+258866188319';
+      function gerarHorariosAtuais() {
+        var container = document.getElementById('horarios-container');
+        container.innerHTML = '';
+
+        var horaAtual = new Date();
+
+        var horaAtualFormatada =
+          horaAtual.getHours() +
+          ':' +
+          horaAtual.getMinutes() +
+          ':' +
+          horaAtual.getSeconds();
+
+        var horaAtualElemento = document.createElement('h2');
+        horaAtualElemento.innerHTML = 'Horário Atual: ' + horaAtualFormatada;
+
+        container.appendChild(horaAtualElemento);
+
+        for (var i = 0; i < 70; i++) {
+          var horaAleatoria = new Date(horaAtual);
+
+          var segundosAleatorios = Math.floor(Math.random() * 60);
+          var minutosAleatorios = Math.floor(Math.random() * 60);
+
+          horaAleatoria.setSeconds(horaAleatoria.getSeconds() + segundosAleatorios);
+          horaAleatoria.setMinutes(horaAleatoria.getMinutes() + minutosAleatorios);
+
+          var horaFormatada =
+            horaAleatoria.getHours() +
+            ':' +
+            horaAleatoria.getMinutes() +
+            ':' +
+            horaAleatoria.getSeconds();
+
+          var horaContainer = document.createElement('div');
+          horaContainer.className = 'hora-container';
+
+          var horaElemento = document.createElement('p');
+          horaElemento.innerHTML = horaFormatada;
+
+          if (Math.random() < 0.5) {
+            horaContainer.classList.add('hora-roxo');
+          } else {
+            horaContainer.classList.add('hora-rosa');
+          }
+
+          var proximosElemento = document.createElement('p');
+          proximosElemento.classList.add('proximos');
+          proximosElemento.innerHTML = 'Próximos';
+
+          horaContainer.appendChild(proximosElemento);
+          horaContainer.appendChild(horaElemento);
+          container.appendChild(horaContainer);
+        }
       }
     </script>
+  </head>
+  <body>
+    <div id="horarios-container"></div>
+    <button onclick="gerarHorariosAtuais()">Gerar Horários</button>
   </body>
 </html>
 
