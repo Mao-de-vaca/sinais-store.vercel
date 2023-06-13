@@ -1,82 +1,192 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sinais Store</title>
-  <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
+    <title>Sinais Store</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-    * {
-      margin: 0;
-      padding: 0;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      min-height: 100vh;
-      font-family: "Poppins", "Times New Roman", Times, serif, sans-serif;
-      background-color: hsl(352, 91%, 8%);
-      color: #fff;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-    }
+        body {
+            font-family: "Poppins", "Times New Roman", Times, serif, sans-serif;
+            background-color: hsl(352, 91%, 8%);
+            min-height: 100vh;
+            width: 100%;
+        }
 
-    h1 {
-      font-size: 24px;
-    }
+        header {
+            display: block;
+            width: 100%;
+            height: 20px;
+        }
 
-    p {
-      font-size: 18px;
-    }
+        main {
+            width: 99%;
+            color: #180505;
+            margin: 0;
+        }
 
-    .button {
-      padding: 10px 20px;
-      border-radius: 25px;
-      border: none;
-      background-color: #DC3545;
-      color: white;
-      cursor: pointer;
-      font-weight: 500;
-      text-decoration: none;
+        h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+        }
 
-    }
+        button.generator {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background-color: hsl(202, 84%, 49%);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%);
+        }
 
-    .off {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background-color: #DC3545;
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 50%;
-      padding: 0;
-      margin: 0;
-      text-align: center;
-    }
+        #horarios-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-    .off i {
-      color: #fff;
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-  </style>
+        .hora-container {
+            display: inline-block;
+            margin: 10px;
+            width: 100px;
+            height: 100px;
+            background-color: hsl(281, 81%, 51%);
+            color: white;
+            font-size: 16px;
+            border-radius: 50%;
+            text-align: center;
+        }
+
+        #time,
+        .load {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .hora-roxo {
+            background-color: hsla(271, 57%, 50%, 0.915);
+        }
+
+        .hora-rosa {
+            background-color: #e708b6e6;
+        }
+
+        .proximos {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 
 <body>
-  <a href="index.html"> <button class="off"><i class="fa fa-power-off" aria-hidden="true"></i></button></a>
-  <h1>Sinais Store 100%</h1>
-  <br>
-  <p>clique no botao</p>
-  <br>
-  <a class="button" href="tela free 2mn">Turbinar</a>
-</body>
+    <header>
+        <div>
+            <button class="whatsapp" onclick="whatsapp()">
+                Suporte <i class="fa fa-whatsapp"></i>
+            </button>
+        </div>
+    </header>
+    <main>
+        <button class="generator" onclick="load()">
+            Turbinar
+        </button>
+        <div id="time"></div>
+        <div id="horarios-container"></div>
+    </main>
 
+    <script>
+        function whatsapp() {
+            // window.location.href = "https://api.whatsapp.com/send?phone=+258874601002";
+            alert("Suporte via WhatsApp");
+        }
+
+        function load() {
+            var container = document.getElementById("horarios-container").innerHTML =
+                '<div class="load">Carregando</div>';
+            setTimeout(() => gerarHorariosAtuais(), 500);
+        }
+
+        function gerarHorariosAtuais() {
+            var horaAtual = new Date();
+
+            var horaAtualFormatada =
+                horaAtual.getHours() +
+                ":" +
+                horaAtual.getMinutes() +
+                ":" +
+                horaAtual.getSeconds();
+
+            var horaAtualElemento = document.createElement("h1");
+
+            document.getElementById("time").innerHTML =
+                "Horário Atual: " + horaAtualFormatada;
+            var container = document.getElementById("horarios-container");
+            container.innerHTML = "";
+
+            for (var i = 0; i < 70; i++) {
+                var horaAleatoria = new Date(horaAtual);
+
+                var segundosAleatorios = Math.floor(Math.random() * 60);
+                var minutosAleatorios = Math.floor(Math.random() * 60);
+
+                horaAleatoria.setSeconds(
+                    horaAleatoria.getSeconds() + segundosAleatorios
+                );
+                horaAleatoria.setMinutes(
+                    horaAleatoria.getMinutes() + minutosAleatorios
+                );
+
+                var horaFormatada =
+                    horaAleatoria.getHours() +
+                    ":" +
+                    horaAleatoria.getMinutes() +
+                    ":" +
+                    horaAleatoria.getSeconds();
+
+                var horaContainer = document.createElement("div");
+                horaContainer.className = "hora-container";
+
+                var horaElemento = document.createElement("p");
+                horaElemento.innerHTML = horaFormatada;
+
+                if (Math.random() < 0.5) {
+                    horaContainer.classList.add("hora-roxo");
+                } else {
+                    horaContainer.classList.add("hora-rosa");
+                }
+
+                var proximosElemento = document.createElement("p");
+                proximosElemento.classList.add("proximos");
+                proximosElemento.innerHTML = "Próximos";
+
+                horaContainer.appendChild(proximosElemento);
+                horaContainer.appendChild(horaElemento);
+                container.appendChild(horaContainer);
+            }
+        }
+    </script>
+</body>
 </html>
+
